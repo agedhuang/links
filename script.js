@@ -20,8 +20,8 @@ allItems.forEach(function (item) {
       bgImg.innerHTML = '<img src="' + item.src + '" alt="">';
     }
     else if (item.classList.contains('iframe-wrapper')) {
-      var iframeSrc = item.querySelector('iframe').src;
-      bgImg.innerHTML = '<iframe src="' + iframeSrc + '" frameborder="0"></iframe>';
+      var iframeEle = item.querySelector('iframe');
+      bgImg.innerHTML = '<iframe src="' + iframeEle.src + '" frameborder="0"></iframe>';
     }
     else if (item.tagName === 'P') {
       bgImg.innerHTML = '<p>' + item.textContent + '</p>';
