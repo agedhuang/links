@@ -94,6 +94,9 @@ body{
 .row-start-5{
   grid-row-start: 5;
 }
+.row-start-6{
+  grid-row-start: 6;
+}
 
 .row-span-1{
   grid-row-end: span 1;
@@ -161,4 +164,15 @@ iframe{
 
 .hidden{
   display: none;
+}
+
+.middle-text{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1em;
+  color: var(--font-color);
+  pointer-events: none;
+  /* z-index: 3; */
 }

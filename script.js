@@ -2,6 +2,28 @@ let allItems = document.querySelectorAll('.grid-column img, .grid-column .iframe
 
 // I use functino(), not => {} because its easier more me to read, I don't know will you think its a old style?
 allItems.forEach(function (item) {
+  item.addEventListener("mouseenter", function () {
+    let middleText = document.querySelector(".middle-text");
+    if (item.tagName === 'IMG') {
+      middleText.textContent = "[Image]";
+    }
+    else if (item.classList.contains('iframe-wrapper')) {
+      middleText.textContent = "[Link]";
+    }
+    else if (item.tagName === 'P') {
+      middleText.textContent = "[Text]";
+    }
+  })
+
+  item.addEventListener("mouseleave", function () {
+    let middleText = document.querySelector(".middle-text");
+    middleText.textContent = "hover/click";
+  })
+
+
+
+
+
   item.addEventListener('click', function () {
     let currentItem = item;
 
