@@ -1,8 +1,9 @@
-var allItems = document.querySelectorAll('.grid-column img, .grid-column .iframe-wrapper, .grid-column .text-block');
+let allItems = document.querySelectorAll('.grid-column img, .grid-column .iframe-wrapper, .grid-column .text-block');
 
+// I use functino(), not => {} because its easier more me to read, I don't know will you think its a old style?
 allItems.forEach(function (item) {
   item.addEventListener('click', function () {
-    var currentItem = item;
+    let currentItem = item;
 
     // hide another items when current item was clicked and the bg-img was be shown
     allItems.forEach(function (otheritem) {
@@ -15,12 +16,12 @@ allItems.forEach(function (item) {
     })
 
     // Text block will be different from img and iframe, need to handle separately,cuz I need to change the .bg-img's color and background color and font size
-    var bgImg = document.querySelector('.bg-img');
+    let bgImg = document.querySelector('.bg-img');
     if (item.tagName === 'IMG') {
       bgImg.innerHTML = '<img src="' + item.src + '" alt="">';
     }
     else if (item.classList.contains('iframe-wrapper')) {
-      var iframeEle = item.querySelector('iframe');
+      let iframeEle = item.querySelector('iframe');
       bgImg.innerHTML = '<iframe src="' + iframeEle.src + '" frameborder="0"></iframe>';
     }
     else if (item.tagName === 'P') {
