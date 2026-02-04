@@ -1,0 +1,160 @@
+@font-face {
+  font-family: "PPFraktionMono";
+  font-weight: normal;
+  src: url(./font/PPFraktionMono-Regular.otf);
+}
+
+:root {
+  --font-mono: "PPFraktionMono", monospace;
+  --body-bg-color: #EDEDED;
+  --font-color: #434343;
+  --body-margin-inline: 1.5rem;
+}
+
+body{
+  background-color: var(--body-bg-color);
+  color: var(--font-color);
+  font-family: var(--font-mono);
+  margin-inline: var(--body-margin-inline);
+  margin-block-end: var(--body-margin-inline);
+}
+
+ header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+ }
+
+ main {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.8rem;
+ }
+
+ .grid-column{
+  grid-column: span 1;
+  display: grid; 
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(6, minmax(0, 1fr));
+  gap: 1rem;
+  height: calc(100dvh - (4rem + var(--body-margin-inline)));
+  overflow: hidden;
+ }
+
+ .grid-column *{
+    cursor: pointer;
+    min-width: 0;
+    /* border: 0.1rem solid var(--body-bg-color); */
+ }
+
+ .text-block{
+  font-size: 1rem;
+  color: var(--body-bg-color);
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto; 
+  padding: 1rem;
+ }
+
+ .col-start-1{
+  grid-column-start: 1;
+ }
+ .col-start-2{
+  grid-column-start: 2;
+ }
+.col-start-3{
+  grid-column-start: 3;
+}
+
+.col-span-2{
+  grid-column-end: span 2;
+}
+.col-span-3{
+  grid-column-end: span 3;
+}
+.col-span-4{
+  grid-column-end: span 4;
+}
+
+.row-start-1{
+  grid-row-start: 1;
+}
+.row-start-2{
+  grid-row-start: 2;
+}
+.row-start-3{
+  grid-row-start: 3;
+}
+.row-start-4{
+  grid-row-start: 4;
+}
+.row-start-5{
+  grid-row-start: 5;
+}
+
+.row-span-1{
+  grid-row-end: span 1;
+}
+
+.row-span-2{
+  grid-row-end: span 2;
+}
+.row-span-3{
+  grid-row-end: span 3;
+}
+
+img, iframe{
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: Cover;
+  display: block;
+  border: none;
+}
+
+.bg-img{
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: -1;
+  overflow: hidden;
+  display: none;
+}
+
+.is-active{
+  display: block;
+  z-index: 1;
+}
+
+.is-active-text{
+  color: var(--body-bg-color);
+  background-color: black;
+  font-size: 1.4rem;
+  padding-inline: 4rem;
+  padding-block: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iframe-wrapper{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+iframe{
+  pointer-events: none;
+}
+
+.hidden{
+  display: none;
+}
