@@ -198,8 +198,9 @@ iframe{
 
 
 @media screen and (width <= 600px){ 
+
   :root{
-    --font-size: 0.8rem;
+    --font-size: 0.9rem;
   }
   .channel-title-wrapper{
     display: flex;
