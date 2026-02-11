@@ -9,6 +9,7 @@
   --body-bg-color: #EDEDED;
   --font-color: #434343;
   --body-margin-inline: 1.5rem;
+  --font-size: 1rem;
 }
 
 body{
@@ -17,6 +18,7 @@ body{
   font-family: var(--font-mono);
   margin-inline: var(--body-margin-inline);
   margin-block-end: var(--body-margin-inline);
+  font-size: var(--font-size);
 }
 
  header {
@@ -24,7 +26,7 @@ body{
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  height: 3rem;
+  height: 4rem;
   padding-block-start: 1rem;
  }
 
@@ -46,6 +48,7 @@ body{
   cursor: pointer;
   transform: rotate(0deg);
   transition: transform 0.3s ease;
+  z-index: 3;
  }
 
  .button svg{
@@ -59,7 +62,7 @@ body{
  }
 
  .channel-description{
-  font-size: 1rem;
+  font-size: var(--font-size);
   color: var(--font-color);
    width: 100%;      
   max-width: 60ch;
@@ -82,7 +85,7 @@ body{
   flex-direction: row;
   justify-content: flex-start;
   gap: 1rem;
-  height: calc(100vh - 4rem - var(--body-margin-inline));
+  height: calc(100vh - 5rem - var(--body-margin-inline));
   overflow-x: auto;
   overflow-y: hidden;
  }
@@ -190,4 +193,32 @@ iframe{
   background-color: var(--body-bg-color);
   pointer-events: none;
   /* z-index: 2; */
+}
+  
+
+
+@media screen and (width <= 600px){ 
+  :root{
+    --font-size: 0.8rem;
+  }
+  .channel-title-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  #channel-title{
+    display: block;
+    width: 40vw;
+  }
+
+  .grid-column{
+    width: 60vw;
+  }
+  .middle-text{
+    display: none;
+  }
+  
+
 }
