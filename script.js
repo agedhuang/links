@@ -18,6 +18,7 @@ let placeChannelInfo = (channelData) => {
 
 
 // --------Handle different type of blocks------
+
 let createBlockElement = (blockData) => {
   let container = document.createElement('div'); //div for every block
 
@@ -59,6 +60,7 @@ let createBlockElement = (blockData) => {
 
 
 //--------put the content into the grid layout-------
+
 let layoutBlocks = (blocksData) => {
 
   let main = document.querySelector('main');
@@ -97,12 +99,6 @@ let layoutBlocks = (blocksData) => {
   initInteractions();
 
 }  
-
-
-
-
-
-
 
 
 
