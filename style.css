@@ -9,7 +9,7 @@
   --body-bg-color: #EDEDED;
   --font-color: #434343;
   --body-margin-inline: 1.5rem;
-  --font-size: 1rem;
+  --font-size: 1.2rem;
 }
 
 body{
@@ -85,7 +85,7 @@ body{
   flex-direction: row;
   justify-content: flex-start;
   gap: 1rem;
-  height: calc(100vh - 5rem - var(--body-margin-inline));
+  height: calc(100dvh - 5rem - var(--body-margin-inline));
   overflow-x: auto;
   overflow-y: hidden;
  }
