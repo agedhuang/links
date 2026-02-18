@@ -20,7 +20,9 @@ let placeChannelInfo = (channelData) => {
 // --------Handle different type of blocks------
 
 let getBlockHTML = (blockData) => {
-  
+  if (!blockData.image && blockData.type !== 'Text') {
+    console.log("No image for block:", blockData.title," ", blockData.type, " ", blockData.id, " ", blockData.attachment?.url);
+  }
   // Calculate the random position in vertical
   let colSpan = Math.random() < 0.5 ? 3 : 4; // Randomly decide if the block should span 3 or 4 columns
     // Trinary expression，if the random number is less than 0.5, the block will span 3 columns, otherwise it will span 4 columns.
@@ -46,15 +48,17 @@ let getBlockHTML = (blockData) => {
   //2. link 
   else if (blockData.type === 'Link') {
     contentHtml =
-      `<div class="iframe-wrapper" style="${styleString}">
-        <iframe src="${blockData.source.url}"></iframe> 
+      `<div class="link-wrapper" style="${styleString}">
+        <a href="${blockData.source.url}" target="_blank">
+          <img src="${blockData.image.src}" alt="${blockData.title || 'Are.na block'}"> 
+        </a>
       </div>`
   }
   //3. Embed
   else if (blockData.type === 'Embed') {
     contentHtml =
-      `<div class="iframe-wrapper" style="${styleString}">
-        <iframe src="${blockData.embed.url}"></iframe>
+      `<div class="embed-wrapper" style="${styleString};">
+        ${blockData.embed.html}
       </div>`
   }
   //4. text block
@@ -65,11 +69,19 @@ let getBlockHTML = (blockData) => {
       </div>`
   }
   //5. attachment
-  else if (blockData.type === 'Attachment' && blockData.file) {
-    contentHtml =
-      `<div class="iframe-wrapper" style="${styleString}"> 
-        <iframe src="${blockData.attachment.url}"></iframe> 
-      </div>`
+  else if (blockData.type === 'Attachment' && blockData.attachment) {
+    if (blockData.attachment.content_type === "audio/mpeg" && blockData.image === null) {
+      contentHtml =
+        `<div class="attachment-wrapper" style="${styleString}; display: flex; align-items: center; justify-content: center;"> 
+          <audio src="${blockData.attachment.url}" controls> </audio>
+        </div>`
+    }
+    else {
+      contentHtml =
+        `<div class="attachment-wrapper" style="${styleString}" data-src="${blockData.attachment.url}"> 
+          <img src="${blockData.image.src}" alt="${blockData.title || 'Are.na attachment'}"> 
+        </div>`
+    }
   }
   else {
     return ''; // If the block type is not supported, return an empty string to skip rendering this block.
@@ -134,17 +146,23 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=p
 function initInteractions() {
   const allItems = document.querySelectorAll('.grid-column > *');
   allItems.forEach(function (item) {
-    let imgInside = item.querySelector('img');
+    // let imgInside = item.querySelector('img');
     item.addEventListener("mouseenter", function () {
       let middleText = document.querySelector(".middle-text");
-      if (imgInside) {
+      if (item.classList.contains('image-wrapper')) {
         middleText.textContent = "[Image]";
       }
-      else if (item.classList.contains('iframe-wrapper')) {
+      else if (item.classList.contains('link-wrapper')) {
         middleText.textContent = "[Link]";
       }
       else if (item.classList.contains('text-block')) {
         middleText.textContent = "[Text]";
+      }
+      else if (item.classList.contains('attachment-wrapper')) {
+        middleText.textContent = "[File]";
+      }
+      else if (item.classList.contains('embed-wrapper')) {
+        middleText.textContent = "[Embed]";
       }
     })
 
@@ -170,17 +188,21 @@ function initInteractions() {
       // Text block will be different from img and iframe, need to handle separately,cuz I need to change the .bg-img's color and background color and font size
       let bgImg = document.querySelector('.bg-img');
 
-      let imgInside = item.querySelector('img');
+      let imgInside = item.querySelector('.image-wrapper > img');
       if (imgInside) {
         bgImg.innerHTML = '<img src="' + imgInside.src + '" alt="">';
       }
-      else if (item.classList.contains('iframe-wrapper')) {
-        let iframeEle = item.querySelector('iframe');
-        bgImg.innerHTML = '<iframe src="' + iframeEle.src + '" frameborder="0"></iframe>';
+      else if (item.contains('.attachment-wrapper')) {
+        let wrapper = item.contains('.attachment-wrapper');
+        let attachmentUrl = wrapper.dataset.src; // Get the URL from the data-src attribute
+        bgImg.innerHTML = `<iframe src="${attachmentUrl}" frameborder="0"></iframe>`;
       }
       else if (item.classList.contains('text-block')) {
         bgImg.innerHTML = item.innerHTML;
         bgImg.classList.toggle('is-active-text');
+      }
+      else if (item.contains('.embed-wrapper')) {
+        bgImg.innerHTML = item.querySelector('.embed-wrapper').innerHTML;
       }
       bgImg.classList.toggle('is-active');
     });

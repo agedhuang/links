@@ -143,6 +143,14 @@ iframe{
   border: none;
 }
 
+.embed-wrapper iframe {
+    pointer-events: none;
+}
+
+.bg-img iframe {
+    pointer-events: auto;
+}
+
 .bg-img{
   position: fixed;
   top: 4rem;
@@ -174,7 +182,7 @@ iframe{
 
 }
 
-.iframe-wrapper{
+.iframe-wrapper, .attachment-wrapper, .embed-wrapper{
   width: 100%;
   height: 100%;
   position: relative;
@@ -186,6 +194,13 @@ iframe{
 iframe{
   pointer-events: none;
 }
+
+audio{
+  display: block;
+  width: 100%;
+  min-height: 4rem;
+}
+
 
 .hidden{
   display: none;
