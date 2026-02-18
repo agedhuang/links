@@ -162,6 +162,7 @@ iframe{
   z-index: 1;
   overflow: hidden;
   display: none;
+  background-color: black;
 }
 
 .is-active{

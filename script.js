@@ -163,7 +163,7 @@ function initInteractions() {
         middleText.textContent = "[File]";
       }
       else if (item.classList.contains('embed-wrapper')) {
-        middleText.textContent = "[Embed]";
+        middleText.textContent = "[Youtube]";
       }
     })
 
