@@ -10,6 +10,9 @@
   --font-color: #434343;
   --body-margin-inline: 1.5rem;
   --font-size: 1.2rem;
+  --col-start: 1;
+   --col-span: 4;
+   --row-start: 1;
 }
 
 body{
@@ -101,11 +104,16 @@ body{
   flex-shrink: 0;
  }
 
- .grid-column *{
+ .grid-column > *{
     cursor: pointer;
     min-width: 0;
-    /* border: 0.1rem solid var(--body-bg-color); */
+    grid-column-start: var(--col-start);
+    grid-column-end: span var(--col-span);
+    grid-row-start: var(--row-start);
  }
+
+ 
+
 
  .text-block{
   font-size: 0.8rem;

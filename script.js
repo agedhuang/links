@@ -19,44 +19,68 @@ let placeChannelInfo = (channelData) => {
 
 // --------Handle different type of blocks------
 
-let createBlockElement = (blockData) => {
-  let container = document.createElement('div'); //div for every block
+let getBlockHTML = (blockData) => {
+  
+  // Calculate the random position in vertical
+  let colSpan = Math.random() < 0.5 ? 3 : 4; // Randomly decide if the block should span 3 or 4 columns
+    // Trinary expression，if the random number is less than 0.5, the block will span 3 columns, otherwise it will span 4 columns.
+  let maxColStart = 5 - colSpan; // Because I have 5 column in total in each .grid-column, so the max start column is 5 - colSpan
+  let colStart = Math.floor(Math.random() * maxColStart + 1); // Randomly decide the start column for the block, and add 1 because the column index starts from 1 in CSS grid.
+  let rowstart = Math.floor(Math.random() * 6 + 1); // Randomly decide the start row for the block, and add 1 because the row index starts from 1 in CSS grid.
+
+  // only change CSS variable
+  let styleString =
+  `--col-start: ${colStart};
+   --col-span: ${colSpan};
+   --row-start: ${rowstart};`;
+  
+  let contentHtml = '';
 
   //1. image block
   if (blockData.type === 'Image' && blockData.image) {
-    let img = document.createElement('img');
-    img.src = blockData.image.large.src;
-    img.alt = blockData.title || 'Are.na block';
-    container.appendChild(img);
+    contentHtml =
+      `<div class="image-wrapper" style="${styleString}"> 
+        <img src="${blockData.image.large.src}" alt="${blockData.title || 'Are.na block'}"> 
+      </div>`
   }
   //2. link 
   else if (blockData.type === 'Link') {
-    container.classList.add('iframe-wrapper')
-    let iframe = document.createElement('iframe');
-    iframe.src = blockData.source.url;
-    container.appendChild(iframe);
+    contentHtml =
+      `<div class="iframe-wrapper" style="${styleString}">
+        <iframe src="${blockData.source.url}"></iframe> 
+      </div>`
   }
   //3. Embed
   else if (blockData.type === 'Embed') {
-    container.classList.add('iframe-wrapper')
-    container.innerHTML = blockData.embed.html;
+    contentHtml =
+      `<div class="iframe-wrapper" style="${styleString}">
+        <iframe src="${blockData.embed.url}"></iframe>
+      </div>`
   }
   //4. text block
   else if (blockData.type === 'Text') {
-    container.classList.add('text-block')
-    container.innerHTML = blockData.content.html;
+    contentHtml =
+      `<div class="text-block" style="${styleString}">
+        ${blockData.content.html}
+      </div>`
   }
   //5. attachment
   else if (blockData.type === 'Attachment' && blockData.file) {
-    container.classList.add('iframe-wrapper')
-    let iframe = document.createElement('iframe');
-    iframe.src = blockData.attachment.url;
-    container.appendChild(iframe);
+    contentHtml =
+      `<div class="iframe-wrapper" style="${styleString}"> 
+        <iframe src="${blockData.attachment.url}"></iframe> 
+      </div>`
+  }
+  else {
+    return ''; // If the block type is not supported, return an empty string to skip rendering this block.
   }
 
-  return container;
+  return`
+  <div class="grid-column">
+    ${contentHtml}
+  </div>
+  `;
 }
-
 
 
 //--------put the content into the grid layout-------
@@ -68,33 +92,8 @@ let layoutBlocks = (blocksData) => {
   
   if (!blocksData.length) return; // If there are no blocks, exit the function.
 
-  blocksData.forEach((blockData) => {
-    let el = createBlockElement(blockData);
-    
-    // Detect If element have no children or is empty, skip the function
-    if (!el.hasChildNodes() || el.innerHTML.trim() === '') return;
-
-    // Every new block will be put into a column
-    let newCol = document.createElement('div');
-    newCol.classList.add('grid-column');
-    
-    let colSpan = Math.random() < 0.5 ? 3 : 4; // Randomly decide if the block should span 3 or 4 columns
-    // Trinary expression，if the random number is less than 0.5, the block will span 3 columns, otherwise it will span 4 columns.
-
-    let maxColStart = 5 - colSpan; // Because I have 5 column in total in each .grid-column, so the max start column is 5 - colSpan
-    let colStart = Math.floor(Math.random() * maxColStart + 1); // Randomly decide the start column for the block, and add 1 because the column index starts from 1 in CSS grid.
-
-    let rowstart = Math.floor(Math.random() * 6 + 1); // Randomly decide the start row for the block, and add 1 because the row index starts from 1 in CSS grid.
-
-    el.style.gridColumnStart = colStart;
-    el.style.gridColumnEnd = `span ${colSpan}`;
-    el.style.gridRowStart = rowstart;
-
-    // Put them in the colmn and put the column in the main
-    newCol.appendChild(el);
-    main.appendChild(newCol);
-  });
-  
+  let allBlocksHTML = blocksData.map(block => getBlockHTML(block)).join(''); // Generate HTML for all blocks and join them into a single string.
+  main.innerHTML = allBlocksHTML;
   // Re-bind interactions because elements are new!
   initInteractions();
 
