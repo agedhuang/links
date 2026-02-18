@@ -76,6 +76,7 @@ let getBlockHTML = (blockData) => {
           <audio src="${blockData.attachment.url}" controls> </audio>
         </div>`
     }
+    // I Need to store my attachment url in the data-src attribute of the .attachment-wrapper div, so that I can use it when click the block and show the content in the .bg-img div
     else {
       contentHtml =
         `<div class="attachment-wrapper" style="${styleString}" data-src="${blockData.attachment.url}"> 
@@ -173,8 +174,12 @@ function initInteractions() {
 
 
     item.addEventListener('click', function () {
-      let currentItem = item;
+      if (item.classList.contains('link-wrapper')) {
+        return; //Link box will jump to a new tab web, do need more interaction, so just return when click the link block.
+      }
 
+      let currentItem = item;
+      console.log('clicked item classList:', item.classList); 
       // hide another items when current item was clicked and the bg-img was be shown
       allItems.forEach(function (otheritem) {
         if (otheritem !== currentItem) {
@@ -187,22 +192,24 @@ function initInteractions() {
 
       // Text block will be different from img and iframe, need to handle separately,cuz I need to change the .bg-img's color and background color and font size
       let bgImg = document.querySelector('.bg-img');
+      console.log('bgImg found:', bgImg);
 
       let imgInside = item.querySelector('.image-wrapper > img');
       if (imgInside) {
         bgImg.innerHTML = '<img src="' + imgInside.src + '" alt="">';
       }
-      else if (item.contains('.attachment-wrapper')) {
-        let wrapper = item.contains('.attachment-wrapper');
-        let attachmentUrl = wrapper.dataset.src; // Get the URL from the data-src attribute
+      else if (item.classList.contains('attachment-wrapper')) {
+        console.log('attachment, dataset.src:', item.dataset.src);
+        let attachmentUrl = item.dataset.src; // Get the URL from the data-src attribute
         bgImg.innerHTML = `<iframe src="${attachmentUrl}" frameborder="0"></iframe>`;
       }
       else if (item.classList.contains('text-block')) {
         bgImg.innerHTML = item.innerHTML;
         bgImg.classList.toggle('is-active-text');
       }
-      else if (item.contains('.embed-wrapper')) {
-        bgImg.innerHTML = item.querySelector('.embed-wrapper').innerHTML;
+      else if (item.classList.contains('embed-wrapper')) {
+        console.log('embed, innerHTML:', item.innerHTML);
+        bgImg.innerHTML = item.innerHTML;
       }
       bgImg.classList.toggle('is-active');
     });

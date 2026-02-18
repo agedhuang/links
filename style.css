@@ -143,9 +143,11 @@ iframe{
   border: none;
 }
 
+/* for user can use the iframe in .bg-img */
 .embed-wrapper iframe {
     pointer-events: none;
 }
+
 
 .bg-img iframe {
     pointer-events: auto;
