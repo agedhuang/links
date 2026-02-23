@@ -154,7 +154,7 @@ function initInteractions() {
         middleText.textContent = "[Image]";
       }
       else if (item.classList.contains('link-wrapper')) {
-        middleText.textContent = "[Link]";
+        middleText.textContent = "[Link ↗]";
       }
       else if (item.classList.contains('text-block')) {
         middleText.textContent = "[Text]";
@@ -185,10 +185,9 @@ function initInteractions() {
         if (otheritem !== currentItem) {
           otheritem.classList.toggle('hidden');
         }
-        else if (otheritem === currentItem) {
-          otheritem.style.zIndex = '2';
-        }
       })
+
+
 
       // Text block will be different from img and iframe, need to handle separately,cuz I need to change the .bg-img's color and background color and font size
       let bgImg = document.querySelector('.bg-img');
@@ -211,8 +210,11 @@ function initInteractions() {
         console.log('embed, innerHTML:', item.innerHTML);
         bgImg.innerHTML = item.innerHTML;
       }
+      item.classList.toggle('has-cross'); // Add a class to the clicked item to show the cross 
       bgImg.classList.toggle('is-active');
     });
+
+
 
 
   })
