@@ -65,6 +65,22 @@ body{
   transform: rotate(135deg);
  }
 
+ .shuffle-button{
+  cursor: pointer;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+ }
+
+ .shuffle-button svg{
+  width: 1.3rem;
+  height: 0.9rem;
+  fill: var(--font-color);
+ }
+
+.shuffle-button-rotate{
+  transform: rotate(360deg);
+ }
+
  .channel-description{
   font-size: var(--font-size);
   color: var(--font-color);

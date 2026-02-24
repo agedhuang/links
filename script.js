@@ -1,7 +1,7 @@
 let channelSlug = 'time-is-anything-but-linear' // The “slug” is just the end of the URL.
 let myUsername = 'cason-huang' // For linking to your profile.
 let ownerUsername = 'amanda-guo' // For linking to the channel owner’s profile.
-
+let currentBlocksData = null; // CurrentBlockData for Shuffle Button 
 
 // ——————————————Function to place content on the page——————————————
 
@@ -95,6 +95,19 @@ let getBlockHTML = (blockData) => {
   `;
 }
 
+function shuffleLayout() {
+  const allItems = document.querySelectorAll('.grid-column > *');
+  allItems.forEach(function (item) {
+    let colSpan = Math.random() < 0.5 ? 3 : 4;
+    let maxColStart = 5 - colSpan;
+    let colStart = Math.floor(Math.random() * maxColStart + 1);
+    let rowStart = Math.floor(Math.random() * 6 + 1);
+    item.style.setProperty('--col-start', colStart);
+    item.style.setProperty('--col-span', colSpan);
+    item.style.setProperty('--row-start', rowStart);
+  })
+}
+
 
 //--------put the content into the grid layout-------
 
@@ -136,7 +149,7 @@ fetchJson(`https://api.are.na/v3/channels/${channelSlug}`, (json) => {
 // And the data for the blocks:
 fetchJson(`https://api.are.na/v3/channels/${channelSlug}/contents?per=100&sort=position_desc`, (json) => {
 	console.log("Blocks data:", json) // See what we get back.
-
+  currentBlocksData = json.data; // Store the blocks data in the global variable for later use (e.g., shuffle button).
 	layoutBlocks(json.data) // since I need to group the blocks by each page, 5 blocks for each page, I can't do the foreach() loop here.
 })
 
@@ -219,6 +232,15 @@ function initInteractions() {
 
   })
 
+  let shuffuleButton = document.querySelector('.shuffle-button');
+    if (shuffuleButton) {
+      shuffuleButton.addEventListener('click', () => {
+        console.log("Shuffle Button clicked!");
+        shuffuleButton.classList.toggle('shuffle-button-rotate');
+        shuffleLayout();
+      })
+    }
+  
   // show and hide channel description when click the button
   let button = document.querySelector('.button');
   let dri = document.querySelector('.channel-description');
@@ -230,6 +252,8 @@ function initInteractions() {
       dri.classList.toggle('channel-description-show'); 
     })
   }
+
+  
 }
 
 
