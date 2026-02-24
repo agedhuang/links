@@ -147,6 +147,7 @@ img{
   z-index: 4;
 }
 
+/* X cover the image for people to know it can be click to go back */
 .has-cross::after {
   content: "";
   position: absolute;
