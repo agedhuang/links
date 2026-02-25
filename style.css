@@ -132,8 +132,10 @@ body{
   width: 10px;
   height: 10px;
   background: black;
-  border-radius: 50%; /* 圆形 */
+  border-radius: 50%;
   cursor: pointer;
+  /* remove default shadow */
+  box-shadow: none; 
 }
 
  main {
