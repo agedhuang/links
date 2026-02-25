@@ -297,7 +297,7 @@ audio{
   display: none;
 }
 
-.middle-text{
+.middle-text, .middle-text-phone{
   position: fixed;
   top: 50%;
   left: 50%;
@@ -307,6 +307,11 @@ audio{
   background-color: var(--body-bg-color);
   pointer-events: none;
   z-index: 2;
+}
+
+
+.middle-text-phone{
+  display: none;
 }
   
 
@@ -332,6 +337,14 @@ audio{
 
   .slider{
     width: 45vw;
+  }
+
+  .middle-text-phone{
+    display: block;
+  }
+
+  .middle-text{
+    display: none;
   }
 
   /* .grid-column{

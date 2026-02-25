@@ -266,8 +266,8 @@ function initInteractions() {
   }
 
   if (window.innerWidth <= 768) {
-    let middleText = document.querySelector(".middle-text");
-    middleText.textContent = "scroll/click";
+    let middleText = document.querySelector(".middle-text-phone");
+    // middleText.textContent = "scroll/click";
 
     // Just learned that entries is always an array, so I need entries.target 
     // here is for phone, when the block is fully in the viewport, show the type of block in the middle text, create a similar experience as hover on desktop.
