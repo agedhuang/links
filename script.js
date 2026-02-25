@@ -192,7 +192,7 @@ function initInteractions() {
       }
 
       let currentItem = item;
-      console.log('clicked item classList:', item.classList); 
+      console.log('clicked item classList:', item.classList);
       // hide another items when current item was clicked and the bg-img was be shown
       allItems.forEach(function (otheritem) {
         if (otheritem !== currentItem) {
@@ -233,13 +233,13 @@ function initInteractions() {
   })
 
   let shuffuleButton = document.querySelector('.shuffle-button');
-    if (shuffuleButton) {
-      shuffuleButton.addEventListener('click', () => {
-        console.log("Shuffle Button clicked!");
-        shuffuleButton.classList.toggle('shuffle-button-rotate');
-        shuffleLayout();
-      })
-    }
+  if (shuffuleButton) {
+    shuffuleButton.addEventListener('click', () => {
+      console.log("Shuffle Button clicked!");
+      shuffuleButton.classList.toggle('shuffle-button-rotate');
+      shuffleLayout();
+    })
+  }
   
   // show and hide channel description when click the button
   let button = document.querySelector('.button');
@@ -247,13 +247,42 @@ function initInteractions() {
 
   if (button) {
     button.addEventListener('click', () => {
-      console.log("Button clicked!"); 
+      console.log("Button clicked!");
       button.classList.toggle('button-rotate');
-      dri.classList.toggle('channel-description-show'); 
+      dri.classList.toggle('channel-description-show');
     })
   }
 
-  
+  if (window.innerWidth <= 768) {
+    let middleText = document.querySelector(".middle-text");
+
+    // Just learned that entries is always an array, so I need entries.target 
+    let blocksObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return; 
+        let target = entry.target;
+        if (target.classList.contains('image-wrapper')) {
+          middleText.textContent = "[Image]";
+        }
+        else if (target.classList.contains('link-wrapper')) {
+          middleText.textContent = "[Link ↗]";
+        }
+        else if (target.classList.contains('text-block')) {
+          middleText.textContent = "[Text]";
+        }
+        else if (target.classList.contains('attachment-wrapper')) {
+          middleText.textContent = "[File]";
+        }
+        else if (target.classList.contains('embed-wrapper')) {
+          middleText.textContent = "[Youtube]";
+        }
+      })
+    }, { threshold: 1 });
+    
+    allItems.forEach(function (item) {
+      blocksObserver.observe(item);
+    })
+  }
 }
 
 
