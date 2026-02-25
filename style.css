@@ -9,11 +9,13 @@
   --body-bg-color: #EDEDED;
   --font-color: #434343;
   --body-margin-inline: 1.5rem;
+  --body-margin-block: 3rem;
   --font-size: 1.2rem;
   --col-start: 1;
   --col-span: 4;
   --row-start: 1;
   --x-color: #EDEDED;
+  --grid-column-width: 20vw;
 }
 
 body{
@@ -21,7 +23,7 @@ body{
   color: var(--font-color);
   font-family: var(--font-mono);
   margin-inline: var(--body-margin-inline);
-  margin-block-end: var(--body-margin-inline);
+  margin-block-end: var(--body-margin-block);
   font-size: var(--font-size);
 }
 
@@ -46,6 +48,13 @@ body{
   flex-direction: row;
   align-items: flex-end;
   gap: 1.8rem;
+ }
+
+ .button-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
  }
 
  .button{
@@ -84,7 +93,7 @@ body{
  .channel-description{
   font-size: var(--font-size);
   color: var(--font-color);
-   width: 100%;      
+  width: 100%;      
   max-width: 60ch;
   overflow: hidden;
   background-color: var(--body-bg-color);
@@ -100,12 +109,39 @@ body{
   display: block; 
  }
 
+ .slider-wrapper{
+  position: fixed;
+  bottom: 2dvh;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+ .slider{
+  -webkit-appearance: none; /* 必须加，否则自定义样式不生效 */
+  appearance: none;
+  width: 25vw;
+  height: 1px;
+  background: black;
+  outline: none;
+  cursor: pointer;
+}
+/* use pseudo to control the slider thumb */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: black;
+  border-radius: 50%; /* 圆形 */
+  cursor: pointer;
+}
+
  main {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   gap: 1rem;
-  height: calc(100dvh - 5rem - var(--body-margin-inline));
+  height: calc(100dvh - 5rem - var(--body-margin-block));
   overflow-x: auto;
   overflow-y: hidden;
   margin-inline-end: calc(-1 * var(--body-margin-inline));
@@ -117,7 +153,7 @@ body{
   grid-template-rows: repeat(6, 1fr);
   gap: 1rem;
   height: auto;
-  width: 20vw;
+  width: var(--grid-column-width);
   overflow: hidden;
   flex-shrink: 0;
  }
@@ -277,6 +313,8 @@ audio{
 
   :root{
     --font-size: 0.9rem;
+    --grid-column-width: 60vw;
+
   }
   .channel-title-wrapper{
     display: flex;
@@ -290,9 +328,13 @@ audio{
     width: 40vw;
   }
 
-  .grid-column{
-    width: 60vw;
+  .slider{
+    width: 45vw;
   }
+
+  /* .grid-column{
+    width: 60vw;
+  } */
   /* .middle-text{
     display: none;
   } */

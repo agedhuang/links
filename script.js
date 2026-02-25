@@ -226,11 +226,23 @@ function initInteractions() {
       item.classList.toggle('has-cross'); // Add a class to the clicked item to show the cross 
       bgImg.classList.toggle('is-active');
     });
-
-
-
-
   })
+
+  // use slider to change the width of the grid column, which is also the width of the block
+  let widthSlider = document.querySelector('.slider');
+  if (widthSlider) {
+
+    // based on different media, the grid column will have different default width.
+    if (window.innerWidth <= 768) {
+      widthSlider.value = 60; // 手机默认 60vw
+    } else {
+      widthSlider.value = 20; // 电脑默认 20vw
+    }
+
+    widthSlider.addEventListener('input', () => {
+      document.documentElement.style.setProperty('--grid-column-width', widthSlider.value + 'vw');
+    })
+  }
 
   let shuffuleButton = document.querySelector('.shuffle-button');
   if (shuffuleButton) {
@@ -255,8 +267,10 @@ function initInteractions() {
 
   if (window.innerWidth <= 768) {
     let middleText = document.querySelector(".middle-text");
+    middleText.textContent = "scroll/click";
 
     // Just learned that entries is always an array, so I need entries.target 
+    // here is for phone, when the block is fully in the viewport, show the type of block in the middle text, create a similar experience as hover on desktop.
     let blocksObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return; 
